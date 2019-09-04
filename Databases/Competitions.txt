@@ -1,0 +1,70 @@
+create database db2;
+
+use db2;
+
+create table Competitions(
+id serial,
+name varchar(30),
+primary key(name),
+city varchar(30)
+);
+
+create table Projects(
+id serial,
+name varchar(30),
+primary key(name),
+description varchar(100)
+);
+
+create table Students(
+firstName varchar(30),
+lastName varchar(30),
+city varchar(30),
+projectName varchar(30) not null,
+foreign key(projectName) references Projects(name)
+);
+
+create table Project_Competition(
+projectName varchar(30),
+foreign key(projectName) references Projects(name),
+competitionName varchar(30),
+foreign key(competitionName) references Competitions(name),
+award enum('gold', 'silver', 'bronze')
+);
+
+insert into Competitions values(null ,'NOIT', 'Sofia');
+insert into Competitions values(null ,'Young Talants', 'Sofia');
+insert into Competitions values(null ,'It talant', 'Dobrich');
+
+insert into Projects values (null, 'My5', 'Cloud storage');
+insert into Projects values (null, 'Bongo', 'Future predictor');
+insert into Projects values (null, 'Crypto.io', 'Cryptocurrencies predictions');
+insert into Projects values (null, 'ImagePr', 'Image processing');
+
+insert into Students values('Adam', 'Atanasov', 'London', 'My5');
+insert into Students values('John', 'Whils', 'Varna', 'My5');
+insert into Students values('Amanda', 'Troyanska', 'London', 'Bongo');
+insert into Students values('Katya', 'Hristova', 'Moscow', 'Crypto.io');
+insert into Students values('Gosho', 'Kamenov', 'Sofia', 'Bongo');
+insert into Students values('Ivan', 'Petrov', 'Sofia', 'ImagePr');
+
+insert into Project_Competition values('My5', 'NOIT', 'gold');
+insert into Project_Competition values('My5', 'Young Talants', 'bronze');
+insert into Project_Competition values('My5', 'It talant', 'silver');
+insert into Project_Competition values('Bongo', 'NOIT', null);
+insert into Project_Competition values('Bongo', 'Young Talants', 'silver');
+insert into Project_Competition values('Bongo', 'It talant', 'gold');
+insert into Project_Competition values('Crypto.io', 'NOIT', null);
+insert into Project_Competition values('Crypto.io', 'Young Talants', null);
+insert into Project_Competition values('Crypto.io', 'It talant', null);
+insert into Project_Competition values('ImagePr', 'NOIT', 'silver');
+insert into Project_Competition values('ImagePr', 'Young Talants', 'gold');
+insert into Project_Competition values('ImagePr', 'It talant', 'bronze');
+
+select * from Students where city = 'London';
+
+select * from Students where lastName like '%a';
+
+select firstName, lastName, projectName from Students;
+
+select * from Project_Competition where award;

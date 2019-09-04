@@ -1,0 +1,22 @@
+create database geeky;
+
+use geeky;
+
+create table tShirts (
+type enum('male', 'female'),
+color varchar(20),
+size enum('XXS','XS','S', 'M', 'L', 'XL', 'XXL')
+);
+
+insert into tShirts values (1, 'blue', 1);
+insert into tShirts values (1, 'blue', 1);
+insert into tShirts values (1, 'blue', 2);
+insert into tShirts values (2, 'blue', 1);
+insert into tShirts values (2, 'blue', 1);
+insert into tShirts values (2, 'navy', 1);
+
+select type, color, size, count(type) from tShirts group by type, color, size having count(type) > 1 order by type, color, size;
+
+/*'male','blue','XXS','2'
+'male','blue','XS','2'
+'female','blue','XXS','2'*/
